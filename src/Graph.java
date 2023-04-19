@@ -16,10 +16,6 @@ public class Graph {
         return graph;
     }
 
-    public int[][] getFloydMatrix() {
-        return FloydMatrix;
-    }
-
     private Vector<Edge> edges = new Vector<>(V);
 
     public Graph(String path) {
@@ -169,18 +165,23 @@ public class Graph {
     }
 
     public boolean Floyd_Warshall(int[][] cost, int[][] predecessors) {
+        int[][] checker = new int[V][V];
+
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
                 cost[i][j] = FloydMatrix[i][j];
-                predecessors[i][j] = FloydMatrix[i][j];
+                checker[i][j] = FloydMatrix[i][j];
+                predecessors[i][j] = i;
             }
         }
+        // Floyd-Warshall algorithm
         for (int k = 0; k < V; k++) {
             for (int i = 0; i < V; i++) {
                 for (int j = 0; j < V; j++) {
-                    if (predecessors[i][k] != INF && predecessors[k][j] != INF && cost[i][k] + cost[k][j] < cost[i][j]) {
+                    if (checker[i][k] != INF && checker[k][j] != INF && cost[i][k] + cost[k][j] < cost[i][j]) {
                         cost[i][j] = cost[i][k] + cost[k][j];
-                        predecessors[i][j] = predecessors[k][j];
+                        checker[i][j] = checker[k][j];
+                        predecessors[i][j] = k;
                     }
                 }
             }
@@ -196,7 +197,11 @@ public class Graph {
 
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
-                if (predecessors[i][j] == INF) {
+
+                if (cost[i][j] == INF) {
+                    predecessors[i][j] = -1;
+                }
+                if (checker[i][j] == INF) {
                     System.out.println("from " + i + " to " + j + "-> NO EDGE");
                 } else {
                     System.out.println("from " + i + " to " + j + "-> " + cost[i][j]);
