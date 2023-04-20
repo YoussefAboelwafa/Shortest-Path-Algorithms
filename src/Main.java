@@ -8,23 +8,13 @@ public class Main {
         //String path = scanner.nextLine();
 
         Graph graph = new Graph("test1.txt");
-        graph.printSolution();
+        graph.printMatrix(graph.getGraph());
         int[][] predecessors = new int[graph.getV()][graph.getV()];
         int[][] cost = new int[graph.getV()][graph.getV()];
         graph.Floyd_Warshall(cost, predecessors);
 
-
-        for (int i = 0; i < graph.getV(); i++) {
-            for (int j = 0; j < graph.getV(); j++) {
-                if (cost[i][j] == Integer.MAX_VALUE) {
-                    System.out.print(-1 + " ");
-                }
-                else {
-                    System.out.print(predecessors[i][j] + " ");
-                }
-            }
-            System.out.println();
-        }
+        graph.printMatrix(cost);
+        graph.printMatrix(predecessors);
 
 
 //        int [] parent1=new int[graph.getV()];

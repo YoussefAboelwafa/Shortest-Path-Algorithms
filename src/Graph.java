@@ -77,10 +77,15 @@ public class Graph {
         }
     }
 
-    public void printSolution() {
+    public void printMatrix(int[][] graph) {
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
-                System.out.print(graph[i][j] + "   ");
+                if(graph[i][j]==INF){
+                    System.out.print("INF  ");
+                }
+                else {
+                    System.out.print(graph[i][j] + "    ");
+                }
             }
             System.out.println();
         }
@@ -198,7 +203,7 @@ public class Graph {
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
 
-                if (cost[i][j] == INF) {
+                if (cost[i][j] == INF || i==j) {
                     predecessors[i][j] = -1;
                 }
                 if (checker[i][j] == INF) {
