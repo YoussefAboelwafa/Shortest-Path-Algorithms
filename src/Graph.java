@@ -121,7 +121,12 @@ public class Graph {
 
         }
         for (int i = 0; i < V; i++) {
-            System.out.println(i + "->" + cost[i]);
+            if(cost[i]==INF){
+                System.out.println(i + "-> NO PATH" );
+            }
+            else {
+                System.out.println(i + "->" + cost[i]);
+            }
         }
     }
 
@@ -164,7 +169,12 @@ public class Graph {
             return false;
         }
         for (int i = 0; i < V; i++) {
-            System.out.println(i + "-> " + cost[i]);
+            if(cost[i]==INF){
+                System.out.println(i + "-> NO PATH" );
+            }
+            else {
+                System.out.println(i + "->" + cost[i]);
+            }
         }
         return true;
     }
@@ -207,7 +217,7 @@ public class Graph {
                     predecessors[i][j] = -1;
                 }
                 if (checker[i][j] == INF) {
-                    System.out.println("from " + i + " to " + j + "-> NO EDGE");
+                    System.out.println("from " + i + " to " + j + "-> NO PATH");
                 } else {
                     System.out.println("from " + i + " to " + j + "-> " + cost[i][j]);
                 }

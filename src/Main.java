@@ -8,19 +8,18 @@ public class Main {
         //String path = scanner.nextLine();
 
         Graph graph = new Graph("test1.txt");
-        graph.printMatrix(graph.getGraph());
+
         int[][] predecessors = new int[graph.getV()][graph.getV()];
         int[][] cost = new int[graph.getV()][graph.getV()];
+        System.out.println("floyd-warshall");
         graph.Floyd_Warshall(cost, predecessors);
 
-        graph.printMatrix(cost);
-        graph.printMatrix(predecessors);
 
-
-//        int [] parent1=new int[graph.getV()];
-//        int [] cost1=new int[graph.getV()];
-//        graph.dijkstra(0,parent1,cost1);
-//        System.out.println();
-//        graph.bellman_ford(0,parent1,cost1);
+        int [] parent1=new int[graph.getV()];
+        int [] cost1=new int[graph.getV()];
+        System.out.println("dijkstra");
+        graph.dijkstra(1,parent1,cost1);
+        System.out.println("bellman-ford");
+        graph.bellman_ford(1,parent1,cost1);
     }
 }
