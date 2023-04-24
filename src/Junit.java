@@ -8,13 +8,14 @@ import static org.junit.Assert.*;
 
 public class Junit<T extends Comparable<T>> {
 
+    final static int INF = Integer.MAX_VALUE;
     Graph graph1 = new Graph("test1.txt");
     Graph graph2 = new Graph("test2.txt");
     Graph graph3 = new Graph("test3.txt");
     Graph graph4 = new Graph("test4.txt"); //contains negative cycle
     Graph graph5 = new Graph("test5.txt");
     Graph graph6 = new Graph("test6.txt"); // large file with no negative cycle
-
+    Graph graph7 = new Graph("test7.txt");
     int n; // number of nodes
     int[] dijkstra_cost;
     int[] dijkstra_parent;
@@ -28,7 +29,7 @@ public class Junit<T extends Comparable<T>> {
 
     @Test
     public void all_pairs_time_comparasion() {
-        n = graph5.getV();
+        n = graph6.getV();
         dijkstra_cost = new int[n];
         bellman_cost = new int[n];
         dijkstra_parent = new int[n];
@@ -38,20 +39,20 @@ public class Junit<T extends Comparable<T>> {
         //dijkstra
         long start1 = System.nanoTime();
         for (int i = 0; i < n; i++) {
-            graph5.dijkstra(i, dijkstra_parent, dijkstra_cost);
+            graph6.dijkstra(i, dijkstra_parent, dijkstra_cost);
         }
         long end1 = System.nanoTime();
 
         //bellman-ford
         long start2 = System.nanoTime();
         for (int i = 0; i < n; i++) {
-            graph5.bellman_ford(i, bellman_parent, bellman_cost);
+            graph6.bellman_ford(i, bellman_parent, bellman_cost);
         }
         long end2 = System.nanoTime();
 
         //floyd-warshall
         long start3 = System.nanoTime();
-        graph5.Floyd_Warshall(floyd_cost, floyd_parent);
+        graph6.Floyd_Warshall(floyd_cost, floyd_parent);
         long end3 = System.nanoTime();
         System.out.println("Time to get the shortest paths between all pairs of nodes with:");
         System.out.println("\u001B[35m[Dijkstra Algorithm] = (" + (end1 - start1) + ") ns\u001B[0m");
@@ -61,7 +62,7 @@ public class Junit<T extends Comparable<T>> {
 
     @Test
     public void two_nodes_time_comparasion() {
-        n = graph5.getV();
+        n = graph6.getV();
         dijkstra_cost = new int[n];
         bellman_cost = new int[n];
         dijkstra_parent = new int[n];
@@ -71,17 +72,17 @@ public class Junit<T extends Comparable<T>> {
 
         //dijkstra
         long start1 = System.nanoTime();
-        graph5.dijkstra(0, dijkstra_parent, dijkstra_cost);
+        graph6.dijkstra(1, dijkstra_parent, dijkstra_cost);
         long end1 = System.nanoTime();
 
         //bellman-ford
         long start2 = System.nanoTime();
-        graph5.bellman_ford(0, bellman_parent, dijkstra_cost);
+        graph6.bellman_ford(1, bellman_parent, dijkstra_cost);
         long end2 = System.nanoTime();
 
         //floyd-warshall
         long start3 = System.nanoTime();
-        graph5.Floyd_Warshall(floyd_cost, floyd_parent);
+        graph6.Floyd_Warshall(floyd_cost, floyd_parent);
         long end3 = System.nanoTime();
         System.out.println("Time to get the shortest paths between 2 specific nodes with:");
         System.out.println("\u001B[35m[Dijkstra Algorithm] = (" + (end1 - start1) + ") ns\u001B[0m");
@@ -167,7 +168,7 @@ public class Junit<T extends Comparable<T>> {
     }
 
     @Test
-    public void dijkstra_cost_check() {
+    public void floyd_dijkstra_equality() {
         n = graph6.getV();
         floyd_parent = new int[n][n];
         floyd_cost = new int[n][n];
@@ -184,4 +185,17 @@ public class Junit<T extends Comparable<T>> {
         assertTrue(isEqual);
     }
 
+    @Test
+    public void dijkstra_no_path_check() {
+        n = graph7.getV();
+
+        dijkstra_cost = new int[n];
+        dijkstra_parent = new int[n];
+        graph7.dijkstra(2, dijkstra_parent, dijkstra_cost);
+        int[] ans = {INF, INF, 0};
+        boolean isEqual = Arrays.equals(dijkstra_cost, ans);
+        assertTrue(isEqual);
+        System.out.println(Arrays.toString(dijkstra_cost));
+
+    }
 }
