@@ -6,31 +6,29 @@ import java.util.Vector;
 
 public class Graph {
     final static int INF = Integer.MAX_VALUE;
+    public int[][] FloydMatrix;
+    public boolean file_path_error;
     private int V;
     private int E;
     private String path;
     private int[][] graph;
-    public int[][] FloydMatrix;
-
-    public boolean file_path_error=false;
-
-    public int[][] getGraph() {
-        return graph;
-    }
-
     private Vector<Edge> edges = new Vector<>(V);
 
     public Graph(String path) {
 
         this.path = path;
-        file_path_error=readFile(path);
+        readFile(path);
+    }
+
+    public int[][] getGraph() {
+        return graph;
     }
 
     public int getV() {
         return V;
     }
 
-    public boolean readFile(String path) {
+    public void readFile(String path) {
         try {
             int n1;
             int n2;
@@ -73,21 +71,18 @@ public class Graph {
                 FloydMatrix[n1][n2] = n3;
             }
             scanner.close();
-            return false;
 
         } catch (FileNotFoundException e) {
-
-            return true;
+            System.out.println("\u001B[31mERROR opening the file\u001B[0m");
         }
     }
 
     public void printMatrix(int[][] graph) {
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
-                if(graph[i][j]==INF){
+                if (graph[i][j] == INF) {
                     System.out.print("INF  ");
-                }
-                else {
+                } else {
                     System.out.print(graph[i][j] + "    ");
                 }
             }
@@ -125,10 +120,9 @@ public class Graph {
 
         }
         for (int i = 0; i < V; i++) {
-            if(cost[i]==INF){
-                System.out.println(i + "-> NO PATH" );
-            }
-            else {
+            if (cost[i] == INF) {
+                System.out.println(i + "-> NO PATH");
+            } else {
                 System.out.println(i + "->" + cost[i]);
             }
         }
@@ -173,10 +167,9 @@ public class Graph {
             return false;
         }
         for (int i = 0; i < V; i++) {
-            if(cost[i]==INF){
-                System.out.println(i + "-> NO PATH" );
-            }
-            else {
+            if (cost[i] == INF) {
+                System.out.println(i + "-> NO PATH");
+            } else {
                 System.out.println(i + "->" + cost[i]);
             }
         }
@@ -184,23 +177,25 @@ public class Graph {
     }
 
     public boolean Floyd_Warshall(int[][] cost, int[][] predecessors) {
-        int[][] checker = new int[V][V];
 
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
                 cost[i][j] = FloydMatrix[i][j];
-                checker[i][j] = FloydMatrix[i][j];
-                predecessors[i][j] = i;
+                if (i == j) {
+                    predecessors[i][j] = -1;
+                } else if (FloydMatrix[i][j] != INF) {
+                    predecessors[i][j] = i;
+                }
             }
         }
+
         // Floyd-Warshall algorithm
         for (int k = 0; k < V; k++) {
             for (int i = 0; i < V; i++) {
                 for (int j = 0; j < V; j++) {
-                    if (checker[i][k] != INF && checker[k][j] != INF && cost[i][k] + cost[k][j] < cost[i][j]) {
+                    if ((cost[i][k] != INF) && (cost[k][j] != INF) && (cost[i][k] + cost[k][j] < cost[i][j])) {
                         cost[i][j] = cost[i][k] + cost[k][j];
-                        checker[i][j] = checker[k][j];
-                        predecessors[i][j] = k;
+                        predecessors[i][j] = predecessors[k][j];
                     }
                 }
             }
@@ -217,10 +212,7 @@ public class Graph {
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
 
-                if (cost[i][j] == INF || i==j) {
-                    predecessors[i][j] = -1;
-                }
-                if (checker[i][j] == INF) {
+                if (cost[i][j] == INF) {
                     System.out.println("from " + i + " to " + j + "-> NO PATH");
                 } else {
                     System.out.println("from " + i + " to " + j + "-> " + cost[i][j]);

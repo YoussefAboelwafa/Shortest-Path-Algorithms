@@ -30,10 +30,10 @@ public class CommandLine {
         System.out.println("2.Find the shortest paths between all the pairs of nodes");
         System.out.println("3.Check if the graph contains a negative cycle");
         System.out.println("4.Input Another File");
-        String option=scanner.nextLine();
-        while (!(option.equals("1")||option.equals("2")||option.equals("3")||option.equals("4"))){
+        String option = scanner.nextLine();
+        while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
             System.out.println("INVALID INPUT");
-            option=scanner.nextLine();
+            option = scanner.nextLine();
         }
         return Integer.valueOf(option);
     }
@@ -124,15 +124,15 @@ public class CommandLine {
         String path = scanner.nextLine();
 
         graph = new Graph(path);
-        while (graph.file_path_error){
+        while (graph.file_path_error) {
             System.out.println("\u001B[31mERROR opening the file\u001B[0m");
             System.out.println("\u001B[33mEnter the input file path: \u001B[0m");
             path = scanner.nextLine();
             graph = new Graph(path);
         }
-         predecessors = new int[graph.getV()][graph.getV()];
-         cost = new int[graph.getV()][graph.getV()];
-         System.out.println("Graph successfully created");
+        predecessors = new int[graph.getV()][graph.getV()];
+        cost = new int[graph.getV()][graph.getV()];
+        System.out.println("\u001B[32mGraph successfully created ✅\n\u001B[0m");
 
 
     }
