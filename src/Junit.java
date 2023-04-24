@@ -102,7 +102,7 @@ public class Junit<T extends Comparable<T>> {
     }
 
     @Test
-    public void foyd_warshall_negative_cycle_check() {
+    public void floyd_warshall_negative_cycle_check() {
         n = graph4.getV();
         floyd_cost = new int[n][n];
         floyd_parent = new int[n][n];
@@ -149,5 +149,39 @@ public class Junit<T extends Comparable<T>> {
         assertTrue(isEqual);
     }
 
+    @Test
+    public void floyd_bellman_equality() {
+        n = graph5.getV();
+        floyd_parent = new int[n][n];
+        floyd_cost = new int[n][n];
+        bellman_cost = new int[n];
+        bellman_parent = new int[n];
+
+        graph5.Floyd_Warshall(floyd_cost, floyd_parent);
+        graph5.bellman_ford(1, bellman_parent, bellman_cost);
+        int[] second_cost_row = floyd_cost[1];
+        System.out.println(Arrays.toString(second_cost_row));
+        System.out.println(Arrays.toString(bellman_cost));
+        boolean isEqual = Arrays.equals(second_cost_row, bellman_cost);
+        assertTrue(isEqual);
+    }
+
+    @Test
+    public void dijkstra_cost_check() {
+        n = graph6.getV();
+        floyd_parent = new int[n][n];
+        floyd_cost = new int[n][n];
+
+        graph6.Floyd_Warshall(floyd_cost, floyd_parent);
+        int[] first_cost_row = floyd_cost[0];
+        dijkstra_cost = new int[n];
+        dijkstra_parent = new int[n];
+        graph6.dijkstra(0, dijkstra_parent, dijkstra_cost);
+
+        boolean isEqual = Arrays.equals(dijkstra_cost, first_cost_row);
+        System.out.println(Arrays.toString(dijkstra_cost));
+        System.out.println(Arrays.toString(first_cost_row));
+        assertTrue(isEqual);
+    }
 
 }

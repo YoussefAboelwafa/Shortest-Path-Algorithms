@@ -166,6 +166,7 @@ public class Graph {
             System.out.println("\u001B[31mnegative cycle found\u001B[0m");
             return false;
         }
+        System.arraycopy(values, 0, cost, 0, V);
         for (int i = 0; i < V; i++) {
             if (cost[i] == INF) {
                 System.out.println(i + "-> NO PATH");
