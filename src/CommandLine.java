@@ -25,8 +25,6 @@ public class CommandLine {
 
         }
     }
-
-
     public int InputMainMenu(){
         System.out.println("1.Find the shortest paths from source node to all other nodes");
         System.out.println("2.Find the shortest paths between all the pairs of nodes");
@@ -47,9 +45,10 @@ public class CommandLine {
                  algorithm=InputAlgorithm();
                 //call algorithm function
                 switch (algorithm){
-                    case 1:
-                    case 2:
-                    case 3:
+                    //TODO
+                    case 1://dijkstra
+                    case 2://bellman ford
+                    case 3: //warshall
                 }
                 if(algorithm==4){
                     break;
@@ -59,6 +58,7 @@ public class CommandLine {
                 while (true){
                     int PathCost=InputPathCost();
                     switch (PathCost){
+                        //TODO
                         case 1: //get Path length
                         case 2:  //get Path
                     }
@@ -76,9 +76,10 @@ public class CommandLine {
             int algorithm=InputAlgorithm();
             //call algorithm function
             switch (algorithm){
-                case 1:
-                case 2:
-                case 3:
+                //TODO
+                case 1: //DIJKSTRA
+                case 2: //BELLMAN FORD
+                case 3: //WARSHALL
             }
             if(algorithm==4){
                 break;
@@ -88,6 +89,7 @@ public class CommandLine {
                 int destination_node=InputNode("Destination");
                 int PathCost=InputPathCost();
                  switch (PathCost){
+                     //TODO
                         case 1: //get Path length
                         case 2:  //get Path
                     }
@@ -104,8 +106,9 @@ public class CommandLine {
             int algorithm=InputAlgorithm2();
             //call algorithm function
             switch (algorithm){
-                case 1:
-                case 2:
+                //TODO
+                case 1: //BELLMAN FORD
+                case 2: //WARSHALL
             }
             if(algorithm==3){
                 break;
@@ -115,7 +118,6 @@ public class CommandLine {
 
 
     }
-
     public void InputFile(){
         System.out.println("\u001B[33mEnter the input file path: \u001B[0m");
 
@@ -148,7 +150,6 @@ public class CommandLine {
         return Integer.valueOf(option);
 
     }
-
     public int InputPathCost(){
         System.out.println("1.Get Path length");
         System.out.println("2.Get Path");
@@ -170,7 +171,6 @@ public class CommandLine {
         }
         return Integer.valueOf(node);
     }
-
     public boolean isValidInput(String input){
         try {
              Integer.valueOf(input);
