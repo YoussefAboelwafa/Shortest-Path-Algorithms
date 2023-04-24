@@ -12,6 +12,8 @@ public class Graph {
     private int[][] graph;
     public int[][] FloydMatrix;
 
+    public boolean file_path_error=false;
+
     public int[][] getGraph() {
         return graph;
     }
@@ -21,14 +23,14 @@ public class Graph {
     public Graph(String path) {
 
         this.path = path;
-        readFile(path);
+        file_path_error=readFile(path);
     }
 
     public int getV() {
         return V;
     }
 
-    public void readFile(String path) {
+    public boolean readFile(String path) {
         try {
             int n1;
             int n2;
@@ -71,9 +73,11 @@ public class Graph {
                 FloydMatrix[n1][n2] = n3;
             }
             scanner.close();
+            return false;
 
         } catch (FileNotFoundException e) {
-            System.out.println("\u001B[31mERROR opening the file\u001B[0m");
+
+            return true;
         }
     }
 
