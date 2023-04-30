@@ -15,7 +15,7 @@ public class Junit<T extends Comparable<T>> {
     Graph graph5 = new Graph("test5.txt");
     Graph graph6 = new Graph("test6.txt"); // large file with no negative cycle
     Graph graph7 = new Graph("test7.txt");
-    Graph graph8 = new Graph("test8.txt"); // one edge
+    Graph graph8 = new Graph("test8.txt");
     int n; // number of nodes
     int[] dijkstra_cost;
     int[] dijkstra_parent;
@@ -224,7 +224,7 @@ public class Junit<T extends Comparable<T>> {
     }
 
     @Test
-    public void all_cost_parent_check() {
+    public void cost_parent_check_for_all() {
         n = graph8.getV();
         dijkstra_cost = new int[n];
         dijkstra_parent = new int[n];
