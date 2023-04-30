@@ -1,10 +1,9 @@
-import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Junit<T extends Comparable<T>> {
 
@@ -16,6 +15,7 @@ public class Junit<T extends Comparable<T>> {
     Graph graph5 = new Graph("test5.txt");
     Graph graph6 = new Graph("test6.txt"); // large file with no negative cycle
     Graph graph7 = new Graph("test7.txt");
+    Graph graph8 = new Graph("test8.txt"); // one edge
     int n; // number of nodes
     int[] dijkstra_cost;
     int[] dijkstra_parent;
@@ -188,7 +188,6 @@ public class Junit<T extends Comparable<T>> {
     @Test
     public void dijkstra_no_path_check() {
         n = graph7.getV();
-
         dijkstra_cost = new int[n];
         dijkstra_parent = new int[n];
         graph7.dijkstra(2, dijkstra_parent, dijkstra_cost);
@@ -196,6 +195,62 @@ public class Junit<T extends Comparable<T>> {
         boolean isEqual = Arrays.equals(dijkstra_cost, ans);
         assertTrue(isEqual);
         System.out.println(Arrays.toString(dijkstra_cost));
+    }
 
+    @Test
+    public void dijkstra_bellman_cost_equality() {
+        n = graph6.getV();
+        dijkstra_cost = new int[n];
+        dijkstra_parent = new int[n];
+        bellman_cost = new int[n];
+        bellman_parent = new int[n];
+        graph6.dijkstra(5, dijkstra_parent, dijkstra_cost);
+        graph6.bellman_ford(5, bellman_parent, bellman_cost);
+        boolean isEqual = Arrays.equals(dijkstra_cost, bellman_cost);
+        assertTrue(isEqual);
+    }
+
+    @Test
+    public void dijkstra_bellman_parent_equality() {
+        n = graph6.getV();
+        dijkstra_cost = new int[n];
+        dijkstra_parent = new int[n];
+        bellman_cost = new int[n];
+        bellman_parent = new int[n];
+        graph6.dijkstra(0, dijkstra_parent, dijkstra_cost);
+        graph6.bellman_ford(0, bellman_parent, bellman_cost);
+        boolean isEqual = Arrays.equals(dijkstra_parent, bellman_parent);
+        assertTrue(isEqual);
+    }
+
+    @Test
+    public void one_edge_cost_parent_check() {
+        n = graph8.getV();
+        dijkstra_cost = new int[n];
+        dijkstra_parent = new int[n];
+        bellman_cost = new int[n];
+        bellman_parent = new int[n];
+        floyd_parent = new int[n][n];
+        floyd_cost = new int[n][n];
+
+        graph8.dijkstra(1, dijkstra_parent, dijkstra_cost);
+        graph8.bellman_ford(1, bellman_parent, bellman_cost);
+        graph8.Floyd_Warshall(floyd_cost, floyd_parent);
+        boolean isEqual1 = Arrays.equals(dijkstra_cost, bellman_cost);
+        boolean isEqual2 = Arrays.equals(dijkstra_parent, bellman_parent);
+        boolean isEqual3 = Arrays.equals(dijkstra_cost, floyd_cost[1]);
+        boolean isEqual4 = Arrays.equals(dijkstra_parent, floyd_parent[1]);
+        System.out.println(Arrays.toString(dijkstra_cost));
+        System.out.println(Arrays.toString(bellman_cost));
+        System.out.println(Arrays.toString(floyd_cost[1]));
+        
+        System.out.println(Arrays.toString(dijkstra_parent));
+        System.out.println(Arrays.toString(bellman_parent));
+        System.out.println(Arrays.toString(floyd_parent[1]));
+
+        assertTrue(isEqual1);
+        assertTrue(isEqual2);
+        assertTrue(isEqual3);
+        assertTrue(isEqual4);
     }
 }
