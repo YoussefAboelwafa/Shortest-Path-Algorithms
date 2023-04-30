@@ -224,7 +224,7 @@ public class Junit<T extends Comparable<T>> {
     }
 
     @Test
-    public void one_edge_cost_parent_check() {
+    public void all_cost_parent_check() {
         n = graph8.getV();
         dijkstra_cost = new int[n];
         dijkstra_parent = new int[n];
@@ -232,21 +232,21 @@ public class Junit<T extends Comparable<T>> {
         bellman_parent = new int[n];
         floyd_parent = new int[n][n];
         floyd_cost = new int[n][n];
-
-        graph8.dijkstra(1, dijkstra_parent, dijkstra_cost);
-        graph8.bellman_ford(1, bellman_parent, bellman_cost);
+        int source = 1;
+        graph8.dijkstra(source, dijkstra_parent, dijkstra_cost);
+        graph8.bellman_ford(source, bellman_parent, bellman_cost);
         graph8.Floyd_Warshall(floyd_cost, floyd_parent);
         boolean isEqual1 = Arrays.equals(dijkstra_cost, bellman_cost);
         boolean isEqual2 = Arrays.equals(dijkstra_parent, bellman_parent);
-        boolean isEqual3 = Arrays.equals(dijkstra_cost, floyd_cost[1]);
-        boolean isEqual4 = Arrays.equals(dijkstra_parent, floyd_parent[1]);
+        boolean isEqual3 = Arrays.equals(dijkstra_cost, floyd_cost[source]);
+        boolean isEqual4 = Arrays.equals(dijkstra_parent, floyd_parent[source]);
         System.out.println(Arrays.toString(dijkstra_cost));
         System.out.println(Arrays.toString(bellman_cost));
-        System.out.println(Arrays.toString(floyd_cost[1]));
-        
+        System.out.println(Arrays.toString(floyd_cost[source]));
+
         System.out.println(Arrays.toString(dijkstra_parent));
         System.out.println(Arrays.toString(bellman_parent));
-        System.out.println(Arrays.toString(floyd_parent[1]));
+        System.out.println(Arrays.toString(floyd_parent[source]));
 
         assertTrue(isEqual1);
         assertTrue(isEqual2);

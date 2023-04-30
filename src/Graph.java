@@ -150,6 +150,7 @@ public class Graph {
         }
         parent[source] = -1;
         values[source] = 0;
+        for (int i = 0; i < parent.length; i++) parent[i] = -1;
         boolean updated = false;
         boolean found = false;
         for (int i = 0; i < V - 1; i++) {
@@ -193,7 +194,7 @@ public class Graph {
                     predecessors[i][j] = -1;
                 } else if (FloydMatrix[i][j] != INF) {
                     predecessors[i][j] = i;
-                }
+                } else predecessors[i][j] = -1;
             }
         }
 
